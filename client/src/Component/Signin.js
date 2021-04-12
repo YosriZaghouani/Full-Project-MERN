@@ -19,6 +19,9 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import { Link } from "react-router-dom";
+import AuthNavbar from "./layout/AuthNavbar";
+import Loader from "./layout/Loader";
 
 const Signin = () => {
   const dispatch = useDispatch();
@@ -36,156 +39,73 @@ const Signin = () => {
   };
 
   return localStorage.getItem("token") ? (
-    <Redirect to="/profile" />
+    <Redirect to="/" />
   ) : loading ? (
-    <h1>Please wait ....</h1>
+    <Loader />
   ) : (
-    <div className="header bg-gradient-info py-7 py-lg-8">
-      <Container>
-        <div className="header-body text-center mb-7">
-          <Row className="justify-content-center">
-            <Col lg="5" md="6">
-              <h1 className="text-white">Marhaba!</h1>
-              <p className="text-lead text-light">
-                Welcome to my <strong>Website</strong>.com
-              </p>
-            </Col>
-          </Row>
-        </div>
-      </Container>
-      <div className="separator separator-bottom separator-skew zindex-100">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="none"
-          version="1.1"
-          viewBox="0 0 2560 100"
-          x="0"
-          y="0"
-        >
-          <polygon className="fill-default" points="2560 0 2560 100 0 100" />
-        </svg>
-      </div>
-      <Col lg="5" md="7 center">
-        <Card className="bg-secondary shadow border-0">
-          <CardHeader className="bg-transparent pb-5">
-            <div className="text-muted text-center mt-2 mb-3">
-              <small>Sign in with</small>
-            </div>
-            <div className="btn-wrapper text-center">
-              <Button
-                className="btn-neutral btn-icon"
-                color="default"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <span className="btn-inner--icon">
-                  <img
-                    alt="..."
-                    src={
-                      require("../assets/img/icons/common/facebook.svg").default
-                    }
-                  />
-                </span>
-                <span className="btn-inner--text">facebook</span>
-              </Button>
-              <Button
-                className="btn-neutral btn-icon"
-                color="default"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <span className="btn-inner--icon">
-                  <img
-                    alt="..."
-                    src={
-                      require("../assets/img/icons/common/google.svg").default
-                    }
-                  />
-                </span>
-                <span className="btn-inner--text">Google</span>
-              </Button>
-            </div>
-          </CardHeader>
-          <CardBody className="px-lg-5 py-lg-5">
-            <div className="text-center text-muted mb-4">
-              <small>Or sign in with credentials</small>
-            </div>
-            <Form role="form">
-              <FormGroup className="mb-3">
-                <InputGroup className="input-group-alternative">
-                  <InputGroupAddon addonType="prepend">
-                    <InputGroupText>
-                      <i className="ni ni-email-83" />
-                    </InputGroupText>
-                  </InputGroupAddon>
-                  <Input
-                    type="email"
-                    placeholder="Email"
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </InputGroup>
-              </FormGroup>
-              <FormGroup>
-                <InputGroup className="input-group-alternative">
-                  <InputGroupAddon addonType="prepend">
-                    <InputGroupText>
-                      <i className="ni ni-lock-circle-open" />
-                    </InputGroupText>
-                  </InputGroupAddon>
-                  <Input
-                    type="password"
-                    placeholder="Password"
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </InputGroup>
-              </FormGroup>
-              <div className="custom-control custom-control-alternative custom-checkbox">
-                <input
-                  className="custom-control-input"
-                  id=" customCheckLogin"
-                  type="checkbox"
-                />
-                <label
-                  className="custom-control-label"
-                  htmlFor=" customCheckLogin"
-                >
-                  <span className="text-muted">Remember me</span>
-                </label>
-              </div>
+    <div className="main-content">
+      <div className="header bg-white py-7 py-lg-6">
+        <AuthNavbar />
+
+        <Col lg="5" md="8" className="center " style={{ padding: "1%" }}>
+          <Card className="bg-secondary border">
+            <CardHeader className="bg-transparent">
               <div className="text-center">
-                <Button
-                  className="my-4"
-                  color="primary"
-                  type="button"
-                  onClick={loginUser}
-                >
-                  Sign in
-                </Button>
+                <h3>Connexion</h3>
               </div>
-            </Form>
-          </CardBody>
-        </Card>
-        <Row className="mt-3">
-          <Col xs="6">
-            <a
-              className="text-light"
-              href="#pablo"
-              onClick={(e) => e.preventDefault()}
-            >
-              <small>Forgot password?</small>
-            </a>
-          </Col>
-          <Col className="text-right" xs="6">
-            <a
-              className="text-light"
-              href="#pablo"
-              onClick={(e) => e.preventDefault()}
-            >
-              <small>Create new account</small>
-            </a>
-          </Col>
-        </Row>
-      </Col>
+            </CardHeader>
+
+            <CardBody className="px-lg-5 py-lg-5">
+              <Form role="form">
+                <FormGroup className="mb-3">
+                  <InputGroup className="input-group-alternative">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="ni ni-email-83" />
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <Input
+                      type="email"
+                      placeholder="Email"
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </InputGroup>
+                </FormGroup>
+                <FormGroup>
+                  <InputGroup className="input-group-alternative">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="ni ni-lock-circle-open" />
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <Input
+                      type="password"
+                      placeholder="Password"
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </InputGroup>
+                </FormGroup>
+                <Row>
+                  <Col>
+                    <Link to="/register">
+                      <div className="text-muted font-italic">
+                        <small>Créer un nouveau compte</small>
+                      </div>
+                    </Link>
+                  </Col>
+                  <Col>
+                    <div className="text-center">
+                      <Button color="primary" type="button" onClick={loginUser}>
+                        Se connecter
+                      </Button>
+                    </div>
+                  </Col>
+                </Row>
+              </Form>
+            </CardBody>
+          </Card>
+        </Col>
+      </div>
     </div>
   );
 };

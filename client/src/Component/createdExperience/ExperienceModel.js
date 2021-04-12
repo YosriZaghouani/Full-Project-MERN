@@ -62,48 +62,54 @@ const ExperienceModel = ({ experience }) => {
                     </small>
                     ​<CardText>{experience.title}</CardText>
                     <Row>
-                      <Link
-                        to={`/first/${experience._id}`}
-                        className="btn btn-sm btn-outline-secondary"
-                        style={{
-                          color: "#525f7f",
-                          backgroundColor: "white",
-                          boxShadow:
-                            "0 4px 6px white, 0 0px 0px rgb(0 0 0 / 0%)",
-                          border: "0px white",
-                        }}
-                      >
-                        <small>Modifier</small>
-                      </Link>
-                      <Link
-                        style={{
-                          color: "#525f7f",
-                          backgroundColor: "white",
-                          boxShadow:
-                            "0 4px 6px white, 0 0px 0px rgb(0 0 0 / 0%)",
-                          border: "0px white",
-                        }}
-                        to={`/experience/${experience._id}`}
-                        className="btn btn-sm btn-outline-secondary"
-                      >
-                        <small>Demander la validation</small>
-                      </Link>
-                      <Link
-                        onClick={() => {
-                          toggle();
-                        }}
-                        to={`/experiences`}
-                        className="btn btn-sm btn-outline-secondary"
-                        style={{
-                          color: "#525f7f",
-                          backgroundColor: "white",
-                          boxShadow:
-                            "0 4px 6px white, 0 0px 0px rgb(0 0 0 / 0%)",
-                          border: "0px white",
-                        }}
-                      >
-                        <small>Supprimer</small>
-                      </Link>
+                      <Col xl="2">
+                        <Link
+                          to={`/first/${experience._id}`}
+                          className="btn btn-sm btn-outline-secondary"
+                          style={{
+                            color: "#525f7f",
+                            backgroundColor: "white",
+                            boxShadow:
+                              "0 4px 6px white, 0 0px 0px rgb(0 0 0 / 0%)",
+                            border: "0px white",
+                          }}
+                        >
+                          <small>Modifier</small>
+                        </Link>
+                      </Col>
+                      <Col xl="4">
+                        <Link
+                          style={{
+                            color: "#525f7f",
+                            backgroundColor: "white",
+                            boxShadow:
+                              "0 4px 6px white, 0 0px 0px rgb(0 0 0 / 0%)",
+                            border: "0px white",
+                          }}
+                          to={`/experience/${experience._id}`}
+                          className="btn btn-sm btn-outline-secondary"
+                        >
+                          <small>Demander la validation</small>
+                        </Link>
+                      </Col>
+                      <Col>
+                        <Link
+                          onClick={() => {
+                            toggle();
+                          }}
+                          to={`/experiences`}
+                          className="btn btn-sm btn-outline-secondary"
+                          style={{
+                            color: "#525f7f",
+                            backgroundColor: "white",
+                            boxShadow:
+                              "0 4px 6px white, 0 0px 0px rgb(0 0 0 / 0%)",
+                            border: "0px white",
+                          }}
+                        >
+                          <small>Supprimer</small>
+                        </Link>
+                      </Col>
                     </Row>
                     <hr style={{ margin: "1%" }} />
                     <Row>

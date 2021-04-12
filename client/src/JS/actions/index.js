@@ -41,7 +41,7 @@ import {
   DELETE_EXPERIENCE_FAIL,
 } from "../constants/experienceConstants";
 
-const register = (newUser) => async (dispatch) => {
+const addUser = (newUser) => async (dispatch) => {
   dispatch({
     type: REGISTER_USER,
   });
@@ -59,7 +59,7 @@ const register = (newUser) => async (dispatch) => {
   }
 };
 
-export default register;
+export default addUser;
 
 export const login = (cred) => async (dispatch) => {
   dispatch({

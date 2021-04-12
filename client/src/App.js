@@ -19,12 +19,15 @@ import FifthStep from "./Component/createdExperience/FifthStep";
 import ExperienceDetails from "./Component/createdExperience/ExperienceDetails";
 import ExperiencesList from "./Component/createdExperience/ExperiencesList";
 import CreatedExperienceListAd from "./Component/Admin/CreatedExperienceListAd";
+import Home from "./Component/Home";
 
 function App() {
   return (
     <BrowserRouter>
       <AlertProvider template={AlertTemplate}>
-        <Route exact path="/" component={Signup} />
+        <Route exact path="/" component={Home} />
+
+        <Route exact path="/register" component={Signup} />
         <Route exact path="/login" component={Signin} />
         <Route exact path="/profile" component={Profile} />
         {/* <Route exact path="/admin" component={Admin} /> */}

@@ -13,6 +13,7 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  Alert,
 } from "reactstrap";
 import SideBar from "../layout/SideBar";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,12 +26,16 @@ import {
 } from "../../JS/actions/index";
 import { Link, Redirect } from "react-router-dom";
 import Loader from "../layout/Loader";
+import UpdateAlert from "../layout/UpdateAlert";
+import { useAlert } from "react-alert";
 
 const FirstStep2 = ({
   match: {
     params: { id },
   },
 }) => {
+  const alert = useAlert();
+
   const [type, setType] = useState("en ligne");
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
@@ -57,6 +62,7 @@ const FirstStep2 = ({
     <>
       <div style={{ backgroundColor: "#f8f9fe" }}>
         <SideBar />
+
         <div className="main-content">
           <Container fluid>
             <div className="text-center">1 de 4</div>
@@ -83,6 +89,7 @@ const FirstStep2 = ({
                         type: { title: type },
                       })
                     );
+                    alert.show("Votre expérience a été mise à jour");
                   }}
                 >
                   Enregistrer et quitter

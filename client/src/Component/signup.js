@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
-import register from "../JS/actions/index";
+import { Link, Redirect } from "react-router-dom";
+import addUser from "../JS/actions/index";
 //Bootstrap
 import "bootstrap/dist/css/bootstrap.css";
 import { useAlert } from "react-alert";
@@ -20,6 +20,9 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import AuthNavbar from "./layout/AuthNavbar";
+import Loader from "./layout/Loader";
+import { useForm } from "react-hook-form";
 
 const Signup = () => {
   const loading = useSelector((state) => state.userReducer.loading);
@@ -29,12 +32,10 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState(null);
-  const alert = useAlert();
-
-  const addUser = (e) => {
-    e.preventDefault();
+  const { register, handleSubmit, errors } = useForm();
+  const onSubmit = (e) => {
     dispatch(
-      register({
+      addUser({
         name,
         email,
         password,
@@ -43,210 +44,167 @@ const Signup = () => {
     );
   };
 
-  function handleSubmit(e) {
-    if (!email && !name && !phoneNumber)
-      alert.error("Tous les champs sont obligatoires");
-    else if (!email.includes("@")) alert.error("invalid email");
-    else if (!name) {
-      alert.error("Le nom est obligatoire");
-    } else if (!phoneNumber) {
-      alert.error("Le numéro de téléphone est obligatoire");
-    } else if (!password) {
-      alert.error("Le mot de passe est obligatoire");
-    } else {
-      addUser(e);
-      alert.success("Welcome to my site !");
-    }
-  }
-
   return (
     <div className="main-content">
       {loading ? (
-        <h1>Attendez ...</h1>
+        <Loader />
       ) : user ? (
         <Redirect to="/login" />
       ) : (
-        <div className="header bg-gradient-info py-7 py-lg-8">
-          <Container>
-            <div className="header-body text-center mb-7">
-              <Row className="justify-content-center">
-                <Col lg="5" md="6">
-                  <h1 className="text-white">Marhaba!</h1>
-                  <p className="text-lead text-light">
-                    Welcome to my <strong>Website</strong>.com
-                  </p>
-                </Col>
-              </Row>
-            </div>
-          </Container>
-          <div className="separator separator-bottom separator-skew zindex-100">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              preserveAspectRatio="none"
-              version="1.1"
-              viewBox="0 0 2560 100"
-              x="0"
-              y="0"
-            >
-              <polygon
-                className="fill-default"
-                points="2560 0 2560 100 0 100"
-              />
-            </svg>
-          </div>
-
-          <Col lg="5" md="8 center">
-            <Card className="bg-secondary shadow border-0">
-              <CardHeader className="bg-transparent pb-5">
-                <div className="text-muted text-center mt-2 mb-4">
-                  <small>Sign up with</small>
-                </div>
-                <div className="text-center">
-                  <Button
-                    className="btn-neutral btn-icon mr-4"
-                    color="default"
-                    href="#pablo"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    <span className="btn-inner--icon">
-                      <img
-                        alt="..."
-                        src={
-                          require("../assets/img/icons/common/facebook.svg")
-                            .default
-                        }
-                      />
-                    </span>
-                    <span className="btn-inner--text">Facebook</span>
-                  </Button>
-                  <Button
-                    className="btn-neutral btn-icon"
-                    color="default"
-                    href="#pablo"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    <span className="btn-inner--icon">
-                      <img
-                        alt="..."
-                        src={
-                          require("../assets/img/icons/common/google.svg")
-                            .default
-                        }
-                      />
-                    </span>
-                    <span className="btn-inner--text">Google</span>
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardBody className="px-lg-5 py-lg-5">
-                <div className="text-center text-muted mb-4">
-                  <small>Or sign up with credentials</small>
-                </div>
-                <Form role="form">
-                  <FormGroup>
-                    <InputGroup className="input-group-alternative mb-3">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="ni ni-hat-3" />
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input
-                        type="name"
-                        name="name"
-                        placeholder="Nom et prénom"
-                        onChange={(e) => setName(e.target.value)}
-                      />
-                    </InputGroup>
-                  </FormGroup>
-                  <FormGroup>
-                    <InputGroup className="input-group-alternative mb-3">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="ni ni-email-83" />
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        onChange={(e) => setEmail(e.target.value)}
-                      />
-                    </InputGroup>
-                  </FormGroup>
-                  <FormGroup>
-                    <InputGroup className="input-group-alternative">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="ni ni-lock-circle-open" />
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input
-                        type="text"
-                        placeholder="Numéro téléphone"
-                        onChange={(e) => setPhoneNumber(e.target.value)}
-                      />
-                    </InputGroup>
-                  </FormGroup>
-                  <FormGroup>
-                    <InputGroup className="input-group-alternative">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="ni ni-lock-circle-open" />
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input
-                        type="Password"
-                        placeholder="Mot de passe"
-                        onChange={(e) => setPassword(e.target.value)}
-                      />
-                    </InputGroup>
-                  </FormGroup>
-                  <div className="text-muted font-italic">
-                    <small>
-                      password strength:{" "}
-                      <span className="text-success font-weight-700">
-                        strong
-                      </span>
-                    </small>
-                  </div>
-                  <Row className="my-4">
-                    <Col xs="12">
-                      <div className="custom-control custom-control-alternative custom-checkbox">
-                        <input
-                          className="custom-control-input"
-                          id="customCheckRegister"
-                          type="checkbox"
-                        />
-                        <label
-                          className="custom-control-label"
-                          htmlFor="customCheckRegister"
-                        >
-                          <span className="text-muted">
-                            I agree with the{" "}
-                            <a
-                              href="#pablo"
-                              onClick={(e) => e.preventDefault()}
-                            >
-                              Privacy Policy
-                            </a>
+        <div className="header bg-white py-7 py-lg-6">
+          <AuthNavbar />
+          <Col
+            lg="10"
+            md="8"
+            className="center border"
+            style={{ padding: "1%" }}
+          >
+            <Row>
+              <Col>
+                <Card className="bg-secondary  border">
+                  <CardHeader className="bg-transparent">
+                    <div className="text-center">
+                      <h3>Créer votre compte</h3>
+                    </div>
+                  </CardHeader>
+                  <CardBody className="px-lg-5 py-lg-5">
+                    <Form role="form" onSubmit={handleSubmit(onSubmit)}>
+                      <FormGroup>
+                        <InputGroup className="input-group-alternative mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-hat-3" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            type="text"
+                            name="name"
+                            placeholder="Nom et prénom"
+                            onChange={(e) => setName(e.target.value)}
+                            invalid={errors["name"]}
+                            innerRef={register({
+                              required: "Le champ nom est obligatoire.",
+                            })}
+                          />
+                        </InputGroup>
+                        {errors.name && (
+                          <span
+                            className="mr-2 text-sm"
+                            style={{ color: "#dd3a4a" }}
+                          >
+                            {errors.name.message}
                           </span>
-                        </label>
-                      </div>
-                    </Col>
-                  </Row>
-                  <div className="text-center">
-                    <Button
-                      className="mt-4"
-                      color="primary"
-                      type="button"
-                      onClick={handleSubmit}
-                    >
-                      Create account
-                    </Button>
-                  </div>
-                </Form>
-              </CardBody>
-            </Card>
+                        )}
+                      </FormGroup>
+                      <FormGroup>
+                        <InputGroup className="input-group-alternative mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-email-83" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            type="email"
+                            name="email"
+                            placeholder="Email"
+                            onChange={(e) => setEmail(e.target.value)}
+                            invalid={errors["email"]}
+                            innerRef={register({
+                              required: "Le champ email est obligatoire.",
+                            })}
+                          />
+                        </InputGroup>
+                        {errors.email && (
+                          <span
+                            className="mr-2 text-sm"
+                            style={{ color: "#dd3a4a" }}
+                          >
+                            {errors.email.message}
+                          </span>
+                        )}
+                      </FormGroup>
+                      <FormGroup>
+                        <InputGroup className="input-group-alternative">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="fas fa-phone-alt" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            type="text"
+                            name="phonenumber"
+                            placeholder="Numéro de téléphone"
+                            onChange={(e) => setPhoneNumber(e.target.value)}
+                            invalid={errors["phonenumber"]}
+                            innerRef={register({
+                              required: "Le champ téléphone est obligatoire.",
+                            })}
+                          />
+                        </InputGroup>
+                        {errors.phonenumber && (
+                          <span
+                            className="mr-2 text-sm"
+                            style={{ color: "#dd3a4a" }}
+                          >
+                            {errors.phonenumber.message}
+                          </span>
+                        )}
+                      </FormGroup>
+                      <FormGroup>
+                        <InputGroup className="input-group-alternative">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-lock-circle-open" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            type="Password"
+                            name="password"
+                            placeholder="Mot de passe"
+                            onChange={(e) => setPassword(e.target.value)}
+                            invalid={errors["password"]}
+                            innerRef={register({
+                              required: "Le mot de passe est obligatoire.",
+                            })}
+                          />
+                        </InputGroup>
+                        {errors.password && (
+                          <span
+                            className="mr-2 text-sm"
+                            style={{ color: "#dd3a4a" }}
+                          >
+                            {errors.password.message}
+                          </span>
+                        )}
+                      </FormGroup>
+                      <Row>
+                        <Col>
+                          <Link to="/login">
+                            <div className="text-muted font-italic">
+                              <small>Se connecter à un compte existant</small>
+                            </div>
+                          </Link>
+                        </Col>
+                        <Col>
+                          <div className="text-center">
+                            <Button color="primary" type="submit">
+                              S'inscrire
+                            </Button>
+                          </div>
+                        </Col>
+                      </Row>
+                    </Form>
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col>
+                <img
+                  alt="..."
+                  src={require("../Assets/img/brand/register.jpg").default}
+                  style={{ width: "100%", marginTop: "11%" }}
+                />
+              </Col>
+            </Row>
           </Col>
         </div>
       )}

@@ -6,6 +6,7 @@ import ExperienceModel from "./ExperienceModel";
 import { Container, Col, Row, Button } from "reactstrap";
 import Menu from "../layout/Menu";
 import { Link } from "react-router-dom";
+import AuthNavbar from "../layout/AuthNavbar";
 const ExperiencesList = () => {
   const dispatch = useDispatch();
   const experiences = useSelector(
@@ -25,13 +26,13 @@ const ExperiencesList = () => {
     <Loader />
   ) : experiences ? (
     <>
-      <Menu />
+      <AuthNavbar />
       <Container fluid>
         <div className="main-content" style={{ margin: "1%" }}>
           <Col lg="12" md="10">
             <Row>
               <Col>
-                <h2 style={{ color: "#32325d" }}>Vos expériences</h2>
+                <h1 style={{ color: "#32325d" }}>Vos expériences</h1>
               </Col>
               <Col>
                 <Link

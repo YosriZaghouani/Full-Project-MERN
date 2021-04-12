@@ -23,6 +23,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Carrousel from "../layout/Carrousel";
+import AuthNavbar from "../layout/AuthNavbar";
 
 const ExperienceDetails = ({
   match: {
@@ -84,7 +85,8 @@ const ExperienceDetails = ({
       </Modal>
       {/* endModal */}
       <div>
-        <Col lg="7" md="8" className="center">
+        <AuthNavbar />
+        <Col lg="7" md="8" className="center mt-2">
           <Card className="bg-white shadow border-">
             <CardHeader className="bg-white">
               {experience.isBeingValidated === true ? (
@@ -97,12 +99,16 @@ const ExperienceDetails = ({
                 </Link>
               ) : (
                 <Row style={{ float: "right" }}>
-                  <Button className=" btn-sm btn-success" onClick={toggle}>
-                    Demander la validation
-                  </Button>
-                  <Link to={`/create`} className="btn btn-sm btn-info">
-                    Modifier
-                  </Link>
+                  <Col>
+                    <Button className=" btn-sm btn-success" onClick={toggle}>
+                      Envoyer{" "}
+                    </Button>
+                  </Col>
+                  <Col>
+                    <Link to={`/first/${id}`} className="btn btn-sm btn-info">
+                      Modifier
+                    </Link>
+                  </Col>
                 </Row>
               )}
               <div className="text-muted mt-2 mb-4">
@@ -129,7 +135,7 @@ const ExperienceDetails = ({
                         <img
                           alt="..."
                           src={
-                            require("../../assets/img/theme/team-4-800x800.jpg")
+                            require("../../Assets/img/theme/team-3-800x800.jpg")
                               .default
                           }
                         />

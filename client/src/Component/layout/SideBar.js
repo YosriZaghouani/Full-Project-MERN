@@ -150,7 +150,7 @@ const SideBar = (props) => {
                   <img
                     alt="..."
                     src={
-                      require("../../assets/img/theme/team-1-800x800.jpg")
+                      require("../../Assets/img/theme/team-1-800x800.jpg")
                         .default
                     }
                   />

@@ -1,3 +1,4 @@
+const User = require("../../userService/model/User");
 const Experiences = require("../models/Experience");
 //Filter, sorting and paginating jjsdhjqhdq
 class APIfeatures {
@@ -66,7 +67,6 @@ const experienceController = {
     }
   },
   createExperience: async (req, res) => {
-    const userId = req.params.id;
     try {
       //admin and user can create, delete and update "experiences créées"
       const {
@@ -92,7 +92,6 @@ const experienceController = {
         isCreated,
         limitParticipants,
       } = req.body;
-
       const newExperience = new Experiences({
         type,
         sessions,
@@ -116,16 +115,9 @@ const experienceController = {
         isCreated,
         limitParticipants,
       });
-      const searchedUser = await User.findOne({ _id: userId });
-      searchedUser.myExperiences.push(newExperience._id);
 
-      await newExperience
-        .save(userId, searchedUser, {
-          new: true,
-          useFindAndModify: false,
-        })
-        .populate("Experience");
-
+      await newExperience.save();
+      console.log("req.body : ", req.body);
       res.json({
         msg: "expérience créée avec succes",
         experience: newExperience,
@@ -134,6 +126,75 @@ const experienceController = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  // createExperience: async (req, res) => {
+  //   const userId = req.params.id;
+  //   try {
+  //     //admin and user can create, delete and update "experiences créées"
+  //     const {
+  //       type,
+  //       sessions,
+  //       title,
+  //       activity,
+  //       startHour,
+  //       endHour,
+  //       language,
+  //       city,
+  //       themes,
+  //       difficulty,
+  //       program,
+  //       target,
+  //       phobia,
+  //       includedEq,
+  //       excludedEq,
+  //       price,
+  //       isPublished,
+  //       isBeingValidated,
+  //       isValidated,
+  //       isCreated,
+  //       limitParticipants,
+  //     } = req.body;
+
+  //     const newExperience = new Experiences({
+  //       type,
+  //       sessions,
+  //       title,
+  //       activity,
+  //       startHour,
+  //       endHour,
+  //       language,
+  //       city,
+  //       themes,
+  //       difficulty,
+  //       program,
+  //       target,
+  //       phobia,
+  //       includedEq,
+  //       excludedEq,
+  //       price,
+  //       isPublished,
+  //       isBeingValidated,
+  //       isValidated,
+  //       isCreated,
+  //       limitParticipants,
+  //     });
+  //     const searchedUser = await User.findOne({ _id: userId }).exec();
+  //     searchedUser.myExperiences.push(newExperience._id);
+
+  //     await newExperience
+  //       .save(userId, {
+  //         new: true,
+  //         useFindAndModify: false,
+  //       })
+  //       .populate("Experience");
+
+  //     return res.json({
+  //       msg: "expérience créée avec succes",
+  //       experience: newExperience,
+  //     });
+  //   } catch (err) {
+  //     return res.status(500).json({ msg: err.message });
+  //   }
+  // },
   //Delete experience => /api/experience/:id
   deleteExperience: async (req, res) => {
     try {
