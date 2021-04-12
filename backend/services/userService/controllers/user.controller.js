@@ -133,14 +133,14 @@ exports.updateUser = async (req, res) => {
 //Handle user roles
 exports.authorizeRoles = (...roles) => {
   return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
+    const user = User.findById(req.params.id);
+    if (!roles.includes(user.role)) {
       return next(
         res.status(403).json({
-          msg: `Role (${req.user.role}) is not allowed to acces this resource`,
+          msg: `Role (${user.role}) is not allowed to acces this resource`,
         })
       );
     }
-    next();
   };
 };
 

@@ -27,6 +27,8 @@ import { useForm } from "react-hook-form";
 const Signup = () => {
   const loading = useSelector((state) => state.userReducer.loading);
   const user = useSelector((state) => state.userReducer.user);
+  const error = useSelector((state) => state.userReducer.errors);
+
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -44,6 +46,9 @@ const Signup = () => {
     );
   };
 
+  const showAlert = () => {
+    alert(error.msg);
+  };
   return (
     <div className="main-content">
       {loading ? (
@@ -107,7 +112,9 @@ const Signup = () => {
                             type="email"
                             name="email"
                             placeholder="Email"
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={(e) => {
+                              setEmail(e.target.value);
+                            }}
                             invalid={errors["email"]}
                             innerRef={register({
                               required: "Le champ email est obligatoire.",
@@ -115,11 +122,23 @@ const Signup = () => {
                           />
                         </InputGroup>
                         {errors.email && (
+                          <>
+                            <span
+                              className="mr-2 text-sm"
+                              style={{ color: "#dd3a4a" }}
+                            >
+                              {errors.email.message}
+                            </span>{" "}
+                            <br />
+                          </>
+                        )}
+
+                        {error && (
                           <span
                             className="mr-2 text-sm"
                             style={{ color: "#dd3a4a" }}
                           >
-                            {errors.email.message}
+                            {error.msg}
                           </span>
                         )}
                       </FormGroup>
